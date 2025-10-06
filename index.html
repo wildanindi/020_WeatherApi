@@ -25,5 +25,32 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#form-pencarian').on('submit', function(event) {
+                // Mencegah form dari refresh halaman
+                event.preventDefault();
+
+                // Ambil nilai dari input
+                const lokasi = $('#lokasi-input').val().trim();
+                
+                // Pastikan input tidak kosong
+                if (!lokasi) {
+                    $('#hasil-data').html('<p class="pesan error">Kolom lokasi tidak boleh kosong.</p>');
+                    return;
+                }
+
+                const apiKey = '0128da453e474fb2ac240433250610';
+                const urlApi = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lokasi}&aqi=no`;
+
+                // Tampilkan pesan loading
+                $('#hasil-data').html('<p class="pesan">Mengambil data...</p>');
+
+                
+                
+            });
+        });
+    </script>
 </body>
 </html>
