@@ -41,14 +41,37 @@
                     return;
                 }
 
+               
                 const apiKey = '0128da453e474fb2ac240433250610';
                 const urlApi = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${lokasi}&aqi=no`;
 
                 // Tampilkan pesan loading
                 $('#hasil-data').html('<p class="pesan">Mengambil data...</p>');
 
-                
-                
+                // Lakukan panggilan API menggunakan AJAX
+                $.ajax({
+                    url: urlApi,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Jika berhasil, bangun string HTML untuk menampilkan data
+                        const hasilHtml = `
+                            <p><strong>Negara:</strong> ${data.location.country}</p>
+                            <p><strong>Provinsi:</strong> ${data.location.region}</p>
+                            <p><strong>Kecamatan:</strong> ${data.location.name}</p>
+                            <p><strong>Suhu:</strong> ${data.current.temp_c} &deg;C</p>
+                            <p><strong>Longitude:</strong> ${data.location.lon}</p>
+                            <p><strong>Latitude:</strong> ${data.location.lat}</p>
+                        `;
+                        // Tampilkan hasil di div #hasil-data
+                        $('#hasil-data').html(hasilHtml);
+                    },
+                    error: function(error) {
+                        // Jika gagal, tampilkan pesan error
+                        console.error("Error:", error);
+                        $('#hasil-data').html('<p class="pesan error">Gagal mengambil data. Pastikan lokasi yang Anda masukkan benar.</p>');
+                    }
+                });
             });
         });
     </script>
